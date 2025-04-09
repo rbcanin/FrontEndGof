@@ -7,6 +7,18 @@
     display: flex;
     flex-direction: column;
     
+    .menu-item a {
+      text-decoration: none;
+  
+      &.active {
+        background: #000;
+        color: #fff;
+        border-radius: 5px;
+        display: block;
+        padding: 10px 15px;
+      }
+    }
+  
     .menu-header {
       font-size: 12px;
       font-weight: bold;
