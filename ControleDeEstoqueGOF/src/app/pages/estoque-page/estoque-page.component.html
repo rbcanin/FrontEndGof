@@ -1,4 +1,58 @@
 <app-header></app-header>
-<div class="div">
+<div class="layout">
     <app-sidebar></app-sidebar>
-</div>
+    <div class="content">
+      <h1>Estoques</h1>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 user-table">
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let produto"> {{produto.id}} </td>
+        </ng-container>
+  
+        <!-- Nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> ESTOQUE </th>
+          <td mat-cell *matCellDef="let produto"> {{produto.nome}} </td>
+        </ng-container>
+  
+        <!-- E-mail -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> VAlIDADE </th>
+          <td mat-cell *matCellDef="let produto"> {{produto.validade}} </td>
+        </ng-container>
+  
+        <!-- Telefone -->
+        <ng-container matColumnDef="telefone">
+          <th mat-header-cell *matHeaderCellDef> QUANTIDADE </th>
+          <td mat-cell *matCellDef="let produto"> {{produto.quantidade}} </td>
+        </ng-container>
+  
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> STATUS </th>
+          <td mat-cell *matCellDef="let produto">
+            <span class="status" [ngClass]="produto.status.toLowerCase().replace(' ', '-')">
+              {{produto.status}}
+            </span>
+          </td>
+        </ng-container>
+  
+        <!-- Ações -->
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let user">
+            <button mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+    </div>
+  </div>
+  
