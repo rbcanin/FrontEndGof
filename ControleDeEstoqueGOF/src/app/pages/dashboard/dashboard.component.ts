@@ -3,11 +3,11 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-dashboard',
   imports: [SidebarComponent, HeaderComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css'
 })
-export class HomeComponent {
+export class DashboardComponent {
 
 }
