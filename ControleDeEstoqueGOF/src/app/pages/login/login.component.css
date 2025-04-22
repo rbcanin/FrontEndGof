@@ -4,6 +4,8 @@ div {
   justify-content: center;
   align-items: center;
   gap: 30px;
+
+  height: 90vh;
 }
 
 h2 {
