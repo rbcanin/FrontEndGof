@@ -1,0 +1,61 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+app-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: #e0e0e0; /* só para visualizar */
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+}
+
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 1580px;
+  padding: 0 30px;
+
+  h1 {
+    width: 100%;
+  }
+
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 372px;
+    gap: 10px;
+
+    height: 200px;
+    gap: 10px;
+    border-radius: 10px;
+
+    font-size: 24px;
+
+    background-color: black;
+    color: white;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    &:hover {
+      background: white;
+
+      border: solid 1px #000;
+
+      a {
+        color: #000;
+        font-weight: 700;
+      }
+    }
+  }
+}
