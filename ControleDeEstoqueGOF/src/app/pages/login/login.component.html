@@ -1,5 +1,14 @@
 <div>
     <h1>Login</h1>
-    <input type="email" placeholder="Digite seu email aqui">
-    <button>ENTRAR</button>
-</div>
+    <input type="email" [(ngModel)]="email" placeholder="Digite seu email aqui">
+    <button (click)="login()">ENTRAR</button>
+  </div>
+  
+  <!-- Modal de criação de usuário -->
+  <div *ngIf="showPopup" class="popup">
+    <h2>Usuário não encontrado</h2>
+    <input type="text" [(ngModel)]="name" placeholder="Digite seu nome">
+    <button (click)="confirmCreate()">Confirmar</button>
+    <button (click)="cancel()">Cancelar</button>
+  </div>
+  
