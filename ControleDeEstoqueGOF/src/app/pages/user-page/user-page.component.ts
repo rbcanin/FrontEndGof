@@ -31,5 +31,20 @@ constructor(private loginService: LoginService){}
       this.dataSource = users;
     });
   }
+
+  deleteUser(id: number) {
+    if (confirm('Tem certeza que deseja deletar este usuário?')) {
+      this.loginService.deleteUser(id).subscribe({
+        next: () => {
+          this.dataSource = this.dataSource.filter((user: any) => user.id !== id);
+        },
+        error: err => {
+          console.error('Erro ao deletar usuário:', err);
+          alert('Erro ao deletar usuário.');
+        }
+      });
+    }
+  }
+  
   
 }

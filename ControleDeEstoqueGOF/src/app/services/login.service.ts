@@ -21,4 +21,9 @@ export class LoginService {
     return this.http.post<any>(uri, { email, name });
   }
 
+  deleteUser(id: number): Observable<any> {
+    const uri = `${this.apiUrl}delete?id=${id}`;
+    return this.http.delete(uri);
+  }
+  
 }
