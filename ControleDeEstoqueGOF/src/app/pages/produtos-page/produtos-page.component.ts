@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-produtos-page',
@@ -12,7 +13,15 @@ import { HeaderComponent } from '../header/header.component';
   styleUrl: './produtos-page.component.css'
 })
 export class ProdutosPageComponent {
+
+  constructor(private categoriaService: CategoriaService){}
+  
   displayedColumns: string[] = ['id', 'nome', 'email', 'telefone', 'status', 'acoes'];
+
+  ngOnInit(){
+
+  }
+
 
   dataSource = [
     { id: 65458, nome: 'Cadeira', validade: '01/10/2026', quantidade: '10', status: 'Em análise' },

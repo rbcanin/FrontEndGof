@@ -17,8 +17,8 @@ export class LoginService {
   }
 
   createUser(email: string, name: string): Observable<any> {
-    const uri = this.apiUrl + 'create';
-    return this.http.post<any>(uri, { email, name });
+    const uri = this.apiUrl + 'login';
+    return this.http.post<any>(uri, {email, name});
   }
 
   deleteUser(id: number): Observable<any> {
