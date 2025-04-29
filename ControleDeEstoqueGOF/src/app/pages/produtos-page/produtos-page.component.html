@@ -2,7 +2,14 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
   <div class="content">
-    <h1>Produtos</h1>
+  <h1>Produtos</h1> 
+  <button mat-raised-button (click)="openPopUp()">Criar Categorias</button>
+
+  <div *ngIf="showPopup == true">
+    <app-categoria ></app-categoria>
+    <button mat-raised-button (click)="closePopUp()">Fechar</button>
+  </div>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 user-table">
 
       <!-- ID -->

@@ -5,15 +5,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { CategoriaService } from '../../services/categoria.service';
+import { CategoriaComponent } from '../../components/categoria/categoria.component';
+
 
 @Component({
   selector: 'app-produtos-page',
-  imports: [SidebarComponent, HeaderComponent,CommonModule, MatTableModule, MatIconModule,],
+  imports: [SidebarComponent, HeaderComponent,CategoriaComponent, CommonModule, MatTableModule, MatIconModule,],
   templateUrl: './produtos-page.component.html',
   styleUrl: './produtos-page.component.css'
 })
 export class ProdutosPageComponent {
-
+  showPopup: boolean = false;
   constructor(private categoriaService: CategoriaService){}
   
   displayedColumns: string[] = ['id', 'nome', 'email', 'telefone', 'status', 'acoes'];
@@ -22,6 +24,13 @@ export class ProdutosPageComponent {
 
   }
 
+  openPopUp(){
+   this.showPopup = true;
+  }
+  closePopUp(){
+    this.showPopup = false;
+   }
+ 
 
   dataSource = [
     { id: 65458, nome: 'Cadeira', validade: '01/10/2026', quantidade: '10', status: 'Em análise' },
