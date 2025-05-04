@@ -2,16 +2,18 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
   <div class="content">
-  <h1>Produtos</h1> 
-  <button mat-raised-button (click)="openPopUp()">Criar Categorias</button>
+    <h1>Controle de Estoque</h1>
 
-  <div *ngIf="showPopup == true">
-    <app-categoria ></app-categoria>
-    <button mat-raised-button (click)="closePopUp()">Fechar</button>
-  </div>
+    <button mat-raised-button (click)="openPopUp()">Criar Categorias</button>
+   
 
+    <div *ngIf="showPopup">
+      <app-categoria></app-categoria>
+      <button mat-raised-button (click)="closePopUp()">Fechar</button>
+    </div>
+    <br>
+    <button mat-raised-button (click)="navigateToEntrada()">Fazer Entrada de Produto</button>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 user-table">
-
       <!-- ID -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -20,27 +22,27 @@
 
       <!-- Nome -->
       <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef> PRODUTO </th>
+        <th mat-header-cell *matHeaderCellDef> Produto </th>
         <td mat-cell *matCellDef="let produto"> {{produto.nome}} </td>
       </ng-container>
 
-      <!-- E-mail -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> VAlIDADE </th>
-        <td mat-cell *matCellDef="let produto"> {{produto.validade}} </td>
+      <!-- Validade -->
+      <ng-container matColumnDef="validade">
+        <th mat-header-cell *matHeaderCellDef> Validade </th>
+        <td mat-cell *matCellDef="let produto"> {{produto.validade || 'N/A'}} </td>
       </ng-container>
 
-      <!-- Telefone -->
-      <ng-container matColumnDef="telefone">
-        <th mat-header-cell *matHeaderCellDef> QUANTIDADE </th>
+      <!-- Quantidade -->
+      <ng-container matColumnDef="quantidade">
+        <th mat-header-cell *matHeaderCellDef> Quantidade </th>
         <td mat-cell *matCellDef="let produto"> {{produto.quantidade}} </td>
       </ng-container>
 
       <!-- Status -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> STATUS </th>
+        <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let produto">
-          <span class="status" [ngClass]="produto.status.toLowerCase().replace(' ', '-')">
+          <span class="status" [ngClass]="produto.status?.toLowerCase().replace(' ', '-')">
             {{produto.status}}
           </span>
         </td>
@@ -49,16 +51,14 @@
       <!-- Ações -->
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let user">
-          <button mat-icon-button>
-            <mat-icon>X</mat-icon>
-          </button>
+        <td mat-cell *matCellDef="let produto">
+          <button mat-button (click)="editarProduto(produto)">Editar</button>
+          <button mat-button color="warn" (click)="registrarSaida(produto)">Saída</button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
     </table>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,8 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { CategoriaService } from '../../services/categoria.service';
 import { CategoriaComponent } from '../../components/categoria/categoria.component';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,33 +16,70 @@ import { CategoriaComponent } from '../../components/categoria/categoria.compone
   templateUrl: './produtos-page.component.html',
   styleUrl: './produtos-page.component.css'
 })
-export class ProdutosPageComponent {
-  showPopup: boolean = false;
-  constructor(private categoriaService: CategoriaService){}
-  
-  displayedColumns: string[] = ['id', 'nome', 'email', 'telefone', 'status', 'acoes'];
+export class ProdutosPageComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'nome', 'validade', 'quantidade', 'status', 'acoes'];
+  dataSource: any[] = [];
+  showPopup = false;
 
-  ngOnInit(){
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private categoriaService: CategoriaService
+  ) {}
 
+  ngOnInit(): void {
+    this.carregarProdutos();
   }
 
-  openPopUp(){
-   this.showPopup = true;
+  carregarProdutos() {
+    this.http.get<any[]>('/api/Produto').subscribe({
+      next: data => {
+        this.dataSource = data.map(p => ({
+          ...p,
+          quantidade: p.quantTotal,
+          status: this.definirStatus(p.quantTotal)
+        }));
+      },
+      error: err => console.error('Erro ao carregar produtos:', err)
+    });
   }
-  closePopUp(){
+
+  definirStatus(qtd: number): string {
+    if (qtd < 2) return 'Em análise';
+    return 'Ativo';
+  }
+
+  editarProduto(produto: any) {
+    // Lógica para abrir um dialog de edição ou navegar
+    console.log('Editar produto:', produto);
+  }
+
+  registrarSaida(produto: any) {
+    const body = { idProduto: produto.id, quantidade: 1 };
+
+    if (produto.quantidade < 1) {
+      alert('Estoque insuficiente para realizar a saída!');
+      return;
+    }
+
+    this.http.post('/api/Produto/saida', body).subscribe({
+      next: () => {
+        produto.quantidade -= 1;
+        alert('Saída registrada com sucesso.');
+      },
+      error: err => alert('Erro ao registrar saída: ' + err.message)
+    });
+  }
+
+  openPopUp() {
+    this.showPopup = true;
+  }
+
+  closePopUp() {
     this.showPopup = false;
-   }
- 
+  }
 
-  dataSource = [
-    { id: 65458, nome: 'Cadeira', validade: '01/10/2026', quantidade: '10', status: 'Em análise' },
-    { id: 52148, nome: 'Mesa', validade: '01/10/2026', quantidade: '10', status: 'Ativo' },
-    { id: 85412, nome: 'Pedra', validade: '01/10/2026', quantidade: '10', status: 'Ativo' },
-    { id: 35814, nome: 'Chinelo', validade: '01/10/2026', quantidade: '10', status: 'Desativado' },
-    { id: 45215, nome: 'Arroz', validade: '01/10/2026', quantidade: '10', status: 'Ativo' },
-    { id: 54287, nome: 'Feijão', validade: '01/10/2026', quantidade: '10', status: 'Ativo' },
-    { id: 78695, nome: 'Macarrão', validade: '01/10/2026', quantidade: '10', status: 'Ativo' },
-    { id: 54123, nome: 'Ovo', validade: '01/10/2026', quantidade: '10', status: 'Em análise' },
-    { id: 32558, nome: 'Colher', validade: '01/10/2026', quantidade: '10', status: 'Ativo' }
-  ];
+  navigateToEntrada() {
+    this.router.navigate(['/entrada-produto']);
+  }
 }
