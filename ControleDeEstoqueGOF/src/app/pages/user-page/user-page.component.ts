@@ -22,7 +22,7 @@ import { LoginService } from '../../services/login.service';
 export class UserPageComponent {
   
 constructor(private loginService: LoginService){}
-  displayedColumns: string[] = ['id', 'name', 'email','acoes'];
+  displayedColumns: string[] = ['id', 'name', 'email'];
 
   dataSource =[];
 
@@ -32,19 +32,6 @@ constructor(private loginService: LoginService){}
     });
   }
 
-  deleteUser(id: number) {
-    if (confirm('Tem certeza que deseja deletar este usuário?')) {
-      this.loginService.deleteUser(id).subscribe({
-        next: () => {
-          this.dataSource = this.dataSource.filter((user: any) => user.id !== id);
-        },
-        error: err => {
-          console.error('Erro ao deletar usuário:', err);
-          alert('Erro ao deletar usuário.');
-        }
-      });
-    }
-  }
-  
+
   
 }

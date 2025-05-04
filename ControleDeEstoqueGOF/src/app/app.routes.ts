@@ -3,7 +3,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
-import { EstoquePageComponent } from './pages/estoque-page/estoque-page.component';
 import { ProdutosPageComponent } from './pages/produtos-page/produtos-page.component';
 
 
@@ -13,7 +12,6 @@ export const routes: Routes = [
     {path:'home',component: HomeComponent},
     {path:'dashboard', component:DashboardComponent},
     {path:'users', component:UserPageComponent},
-    {path:'estoque', component:EstoquePageComponent},
     {path:'produtos', component:ProdutosPageComponent}
 ];
 
