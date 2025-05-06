@@ -19,11 +19,12 @@ export class ProdutoService {
   }
 
   registrarSaida(body: any): Observable<any> {
-    return this.http.post('http://localhost:5185/api/Produto/saida', body);
+    const url = this.apiUrlProdutos + 'saida';
+    return this.http.post(url, body);
   }
 
   entradaProduto(produto: any): Observable<any> {
-    const url = this.apiUrlProdutos + 'entrada'
+    const url = this.apiUrlProdutos + 'entrada';
     return this.http.post(url, produto);
   }
 }

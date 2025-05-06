@@ -9,11 +9,16 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProdutoService } from '../../services/produto.service';
 import { Estoque, Produto } from '../../models/produto.model';
-
+import { FormsModule } from '@angular/forms';
+import { MatFormField } from '@angular/material/input';
+import { MatLabel } from '@angular/material/input';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-produtos-page',
-  imports: [SidebarComponent, HeaderComponent,CategoriaComponent, CommonModule, MatTableModule, MatIconModule,],
+  imports: [SidebarComponent, HeaderComponent,CategoriaComponent, CommonModule, MatTableModule, MatIconModule,FormsModule, MatFormField, MatLabel, MatDialogModule, MatInputModule],
   templateUrl: './produtos-page.component.html',
   styleUrl: './produtos-page.component.css'
 })
@@ -25,7 +30,8 @@ export class ProdutosPageComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +44,8 @@ export class ProdutosPageComponent implements OnInit {
         const produtos = estoque.produtos.map((p: Produto) => ({
           ...p,
           quantidade: p.quantTotal,
-          validade: this.extrairValidadeMaisProxima(p.validades)
+          validade: this.extrairValidadeMaisProxima(p.validades),
+          quantidadeSaida: 1 
         }));
         this.dataSource = produtos;
       },
@@ -58,41 +65,34 @@ export class ProdutosPageComponent implements OnInit {
     return datas[0].toLocaleDateString();
   }
 
-  definirStatus(qtd: number): string {
-    return qtd < 2 ? 'Em análise' : 'Ativo';
-  }
-
   editarProduto(produto: any) {
     console.log('Editar produto:', produto);
   }
 
   registrarSaida(produto: any) {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      this.router.navigate(['/login']);
+    if (produto.quantidadeSaida < 1 || produto.quantidadeSaida > produto.quantidade) {
+      alert('Quantidade inválida para saída!');
       return;
     }
-
-    if (produto.quantidade < 1) {
-      alert('Estoque insuficiente para realizar a saída!');
-      return;
-    }
-
-    const body = {
-      idProduto: produto.id,
-      quantidade: 1,
-      userId: parseInt(userId)
-    };
-
-    this.produtoService.registrarSaida(body).subscribe({
-      next: () => {
-        alert('Saída registrada com sucesso.');
-        this.carregarProdutos(); // Atualiza a lista
-      },
-      error: err => alert('Erro ao registrar saída: ' + err.message)
+  
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        nome: produto.nome,
+        quantidade: produto.quantidadeSaida
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const body = {
+          id: produto.id,
+          quantidade: produto.quantidadeSaida
+        };
+        this.produtoService.registrarSaida(body).subscribe({});
+        window.location.reload();
+      }
     });
   }
-
   openPopUp() {
     this.showPopup = true;
   }
