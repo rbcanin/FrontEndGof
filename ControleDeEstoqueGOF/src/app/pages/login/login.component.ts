@@ -24,8 +24,17 @@ export class LoginComponent {
       const user = users.find((u: any) => u.email === this.email);
 
       if (user) {
-        localStorage.setItem('userId', user.id);
-        this.router.navigate(['/home']);
+        this.loginService.createUser(user.email, user.name)
+        .subscribe({
+          next: (res) => {
+            console.log('Login realizado com sucesso:', res);
+            localStorage.setItem('userId', user.id);
+            this.router.navigate(['/home']);
+          },
+          error: (err) => {
+            console.error('Erro ao fazer login:', err);
+          }
+        }); 
       } else {
         this.showPopup = true;
       }

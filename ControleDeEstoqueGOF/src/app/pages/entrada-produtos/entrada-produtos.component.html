@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="layout">
+  <app-sidebar></app-sidebar>
+  <div class="content">
+    <h1>Entrada de Produto</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="descricao"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Quantidade</mat-label>
+        <input matInput type="number" formControlName="quantidade" required>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Preço</mat-label>
+        <input matInput type="number" formControlName="preco" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoriaId">
+          <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+            {{ cat.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Tipo do Produto</mat-label>
+        <mat-select formControlName="tipoProduto" required>
+          <mat-option [value]="0">Simples</mat-option>
+          <mat-option [value]="1">Com validade</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Data de Validade 
+            <span *ngIf="form.get('tipoProduto')?.value === 1" style="color: red;">*</span>
+          </mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dataValidade">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Registrar Entrada
+      </button>
+    </form>
+  </div>
+</div>
