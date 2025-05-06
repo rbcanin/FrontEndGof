@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -25,6 +24,7 @@ export class LoginComponent {
       const user = users.find((u: any) => u.email === this.email);
 
       if (user) {
+        localStorage.setItem('userId', user.id);
         this.router.navigate(['/home']);
       } else {
         this.showPopup = true;
@@ -33,9 +33,17 @@ export class LoginComponent {
   }
 
   confirmCreate() {
-    this.loginService.createUser(this.email, this.name).subscribe(() => {
-      this.showPopup = false;
-      this.router.navigate(['/home']);
+    this.loginService.createUser(this.email, this.name).subscribe({
+      next: (response) => {
+        if (response && response.id) {
+          localStorage.setItem('userId', response.id);
+          this.showPopup = false;
+          this.router.navigate(['/home']);
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao criar usuário:', error);
+      }
     });
   }
 

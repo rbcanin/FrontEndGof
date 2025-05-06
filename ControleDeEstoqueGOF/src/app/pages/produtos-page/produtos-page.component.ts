@@ -32,7 +32,13 @@ export class ProdutosPageComponent implements OnInit {
   }
 
   carregarProdutos() {
-    this.http.get<any[]>('/api/Produto').subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.http.get<any[]>(`http://localhost:5185/api/Produto/usuario/${userId}`).subscribe({
       next: data => {
         this.dataSource = data.map(p => ({
           ...p,
@@ -40,7 +46,12 @@ export class ProdutosPageComponent implements OnInit {
           status: this.definirStatus(p.quantTotal)
         }));
       },
-      error: err => console.error('Erro ao carregar produtos:', err)
+      error: err => {
+        console.error('Erro ao carregar produtos:', err);
+        if (err.status === 401) {
+          this.router.navigate(['/login']);
+        }
+      }
     });
   }
 
@@ -55,17 +66,28 @@ export class ProdutosPageComponent implements OnInit {
   }
 
   registrarSaida(produto: any) {
-    const body = { idProduto: produto.id, quantidade: 1 };
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const body = { 
+      idProduto: produto.id, 
+      quantidade: 1,
+      userId: parseInt(userId)
+    };
 
     if (produto.quantidade < 1) {
       alert('Estoque insuficiente para realizar a saída!');
       return;
     }
 
-    this.http.post('/api/Produto/saida', body).subscribe({
+    this.http.post('http://localhost:5185/api/Produto/saida', body).subscribe({
       next: () => {
         produto.quantidade -= 1;
         alert('Saída registrada com sucesso.');
+        this.carregarProdutos(); // Recarrega a lista após a saída
       },
       error: err => alert('Erro ao registrar saída: ' + err.message)
     });
