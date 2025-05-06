@@ -22,7 +22,8 @@ export class ProdutoService {
     return this.http.post('http://localhost:5185/api/Produto/saida', body);
   }
 
-  criarProduto(produto: any): Observable<any> {
-    return this.http.post(`${this.apiUrlProdutos}entrada`, produto);
+  entradaProduto(produto: any): Observable<any> {
+    const url = this.apiUrlProdutos + 'entrada'
+    return this.http.post(url, produto);
   }
 }

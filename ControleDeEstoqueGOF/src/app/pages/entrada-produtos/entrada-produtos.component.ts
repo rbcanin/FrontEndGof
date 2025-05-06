@@ -83,7 +83,7 @@ ngOnInit(): void {
         : null
     };
 
-    this.produtoService.criarProduto(body).subscribe({
+    this.produtoService.entradaProduto(body).subscribe({
       next: () => {
         alert('Produto inserido com sucesso!');
         this.router.navigate(['/produtos']);
