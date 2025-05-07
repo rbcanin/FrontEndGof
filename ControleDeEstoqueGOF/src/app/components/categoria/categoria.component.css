@@ -1,0 +1,36 @@
+div {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+
+  display: flex;
+  gap: 30px;
+  align-items: center;
+
+  justify-content: center;
+
+  width: 900px;
+}
+
+input {
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 30px;
+  width: 500px;
+  font-size: 15px;
+}
+
+button {
+  background-color: #e1e1e1;
+  border-radius: 100px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 15px;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}

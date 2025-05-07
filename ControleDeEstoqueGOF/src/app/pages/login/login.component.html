@@ -1,9 +1,10 @@
-<div>
+<div class="container">
+  <div>
     <h1>Login</h1>
     <input type="email" [(ngModel)]="email" placeholder="Digite seu email aqui">
     <button (click)="login()">ENTRAR</button>
   </div>
-  
+
   <!-- Modal de criação de usuário -->
   <div *ngIf="showPopup" class="popup">
     <h2>Usuário não encontrado</h2>
@@ -11,4 +12,4 @@
     <button (click)="confirmCreate()">Confirmar</button>
     <button (click)="cancel()">Cancelar</button>
   </div>
-  
+</div>

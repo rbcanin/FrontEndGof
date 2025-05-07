@@ -11,7 +11,10 @@ app-sidebar {
 
 .content {
   flex: 1;
-  padding: 30px;
+  padding: 0 50px;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-table {
@@ -44,16 +47,27 @@ app-sidebar {
   color: #f57f17;
 }
 
+.close {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 button {
   background-color: #e1e1e1;
-  border-radius: 10px;
+  border-radius: 100px;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-}
+  padding: 10px 20px;
+  font-size: 15px;
+  max-width: 300px;
 
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}
 
 table.mat-table {
   width: 100%;

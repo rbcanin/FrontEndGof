@@ -11,7 +11,7 @@ app-sidebar {
 
 .content {
   flex: 1;
-  padding: 30px;
+  padding: 0 50px;
 }
 
 .box-container {
@@ -26,6 +26,7 @@ app-sidebar {
   }
 
   .box {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;

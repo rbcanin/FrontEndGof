@@ -11,20 +11,23 @@ app-sidebar {
 
 .content {
   flex: 1;
-  padding: 30px;
+  padding: 0 50px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  background: white;
+  overflow: hidden;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
-  border: 1px solid #ddd;
+  font-weight: 400;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: white;
 }
