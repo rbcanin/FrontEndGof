@@ -1,4 +1,27 @@
 <app-header></app-header>
-<div class="div">
-    <app-sidebar></app-sidebar>
+<div class="layout">
+  <app-sidebar></app-sidebar>
+  <div class="content">
+    <h1>Movimentação</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Tipo</th>
+          <th>Quantidade</th>
+          <th>Data</th>
+          <th>Usuário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimentacao of movimentacoes">
+          <td>{{ movimentacao.estoqueProduto.produto.nome }}</td>
+          <td>{{ movimentacao.tipo === 'E' ? 'Entrada' : 'Saída' }}</td>
+          <td>{{ movimentacao.quantidade }}</td>
+          <td>{{ movimentacao.data | date: 'short' }}</td>
+          <td>{{ movimentacao.user.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
