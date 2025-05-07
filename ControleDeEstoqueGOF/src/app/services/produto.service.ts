@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Produto } from '../models/produto.model';
 
 
 @Injectable({
@@ -26,5 +27,10 @@ export class ProdutoService {
   entradaProduto(produto: any): Observable<any> {
     const url = this.apiUrlProdutos + 'entrada';
     return this.http.post(url, produto);
+  }
+
+  atualizarProduto(produto: any) {
+    const url = this.apiUrlProdutos;
+    return this.http.put(url, produto);
   }
 }

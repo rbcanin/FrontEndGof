@@ -14,6 +14,7 @@ import { MatFormField } from '@angular/material/input';
 import { MatLabel } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { EditarProdutoDialogComponent } from '../../components/editar-produto-dialog/editar-produto-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -26,6 +27,7 @@ export class ProdutosPageComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'validade', 'quantidade', 'preco', 'acoes'];
   dataSource: any[] = [];
   showPopup = false;
+  produtoSelecionado: Produto | null = null;
 
   constructor(
     private http: HttpClient,
@@ -64,10 +66,24 @@ export class ProdutosPageComponent implements OnInit {
     datas.sort((a, b) => a.getTime() - b.getTime());
     return datas[0].toLocaleDateString();
   }
+  
 
-  editarProduto(produto: any) {
-    console.log('Editar produto:', produto);
+  openEditDialog(produto: Produto): void {
+    const dialogRef = this.dialog.open(EditarProdutoDialogComponent, {
+      width: '500px',
+      data: produto
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.produtoService.atualizarProduto(result).subscribe({
+          next: () => alert('Produto atualizado com sucesso!'),
+          error: err => alert('Erro ao atualizar produto: ' + err.message)
+        });
+      }
+    });
   }
+  
 
   registrarSaida(produto: any) {
     if (produto.quantidadeSaida < 1 || produto.quantidadeSaida > produto.quantidade) {
@@ -89,9 +105,9 @@ export class ProdutosPageComponent implements OnInit {
           quantidade: produto.quantidadeSaida
         };
         this.produtoService.registrarSaida(body).subscribe({});
-        window.location.reload();
       }
     });
+    window.location.reload();
   }
   openPopUp() {
     this.showPopup = true;

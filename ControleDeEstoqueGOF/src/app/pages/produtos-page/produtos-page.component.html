@@ -14,31 +14,26 @@
     <br>
     <button mat-raised-button (click)="navigateToEntrada()">Fazer Entrada de Produto</button>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 user-table">
-      <!-- ID -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
         <td mat-cell *matCellDef="let produto"> {{produto.id}} </td>
       </ng-container>
 
-      <!-- Nome -->
       <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef> Produto </th>
         <td mat-cell *matCellDef="let produto"> {{produto.nome}} </td>
       </ng-container>
 
-      <!-- Validade -->
       <ng-container matColumnDef="validade">
         <th mat-header-cell *matHeaderCellDef> Validade </th>
         <td mat-cell *matCellDef="let produto"> {{produto.validade || 'N/A'}} </td>
       </ng-container>
 
-      <!-- Quantidade -->
       <ng-container matColumnDef="quantidade">
         <th mat-header-cell *matHeaderCellDef> Quantidade </th>
         <td mat-cell *matCellDef="let produto"> {{produto.quantidade}} </td>
       </ng-container>
 
-     <!-- Preço -->
 <ng-container matColumnDef="preco">
   <th mat-header-cell *matHeaderCellDef> Preço </th>
   <td mat-cell *matCellDef="let produto">
@@ -47,17 +42,18 @@
 </ng-container>
 
 
-      <!-- Ações -->
       <ng-container matColumnDef="acoes">
-        <th mat-header-cell *matHeaderCellDef>Saída</th>
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let produto">
-          <div class="saida-container">
+          <div class="acoes-container">
             <mat-form-field appearance="outline" class="saida-input">
               <mat-label>Qtd</mat-label>
               <input matInput type="number" min="1" [max]="produto.quantidade" [(ngModel)]="produto.quantidadeSaida">
             </mat-form-field>
-            <button mat-icon-button color="primary" (click)="registrarSaida(produto)">
-              Enviar
+            <button mat-icon-button color="primary" (click)="registrarSaida(produto)">Enviar
+            </button>
+      
+            <button mat-icon-button color="accent" (click)="openEditDialog(produto)">Editar
             </button>
           </div>
         </td>
