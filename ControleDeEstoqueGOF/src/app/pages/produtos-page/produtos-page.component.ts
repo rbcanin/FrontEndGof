@@ -104,10 +104,12 @@ export class ProdutosPageComponent implements OnInit {
           id: produto.id,
           quantidade: produto.quantidadeSaida
         };
-        this.produtoService.registrarSaida(body).subscribe({});
+        this.produtoService.registrarSaida(body).subscribe({          
+          next: () =>  this.carregarProdutos(),
+          error: err => alert('Erro ao fazer saida de produto: ' + err.message)
+        });
       }
     });
-    window.location.reload();
   }
   openPopUp() {
     this.showPopup = true;
