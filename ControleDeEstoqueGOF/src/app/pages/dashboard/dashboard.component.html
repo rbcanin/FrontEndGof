@@ -3,25 +3,48 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <h1>Movimentação</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Produto</th>
-          <th>Tipo</th>
-          <th>Quantidade</th>
-          <th>Data</th>
-          <th>Usuário</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let movimentacao of movimentacoes">
-          <td>{{ movimentacao.estoqueProduto.produto.nome }}</td>
-          <td>{{ movimentacao.tipo === 'E' ? 'Entrada' : 'Saída' }}</td>
-          <td>{{ movimentacao.quantidade }}</td>
-          <td>{{ movimentacao.data | date: 'short' }}</td>
-          <td>{{ movimentacao.user.name }}</td>
-        </tr>
-      </tbody>
+
+    <!-- Filtros -->
+    <div class="filters">
+      <input matInput placeholder="Filtrar produto" [(ngModel)]="columnFilters.produto" (ngModelChange)="applyFilters()">
+      <mat-select [(ngModel)]="columnFilters.tipo" (selectionChange)="applyFilters()">
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="E">Entrada</mat-option>
+        <mat-option value="S">Saída</mat-option>
+      </mat-select>
+      <input matInput placeholder="Quantidade Mínima" [(ngModel)]="columnFilters.quantidadeMin" (ngModelChange)="applyFilters()">
+      <input matInput placeholder="Quantidade Máxima" [(ngModel)]="columnFilters.quantidadeMax" (ngModelChange)="applyFilters()">
+    </div>
+
+    <!-- Tabela -->
+    <table mat-table [dataSource]="filteredMovimentacoes" class="mat-elevation-z8">
+      <ng-container matColumnDef="produto">
+        <th mat-header-cell *matHeaderCellDef>Produto</th>
+        <td mat-cell *matCellDef="let movimentacao">{{ movimentacao.estoqueProduto.produto.nome }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let movimentacao">{{ movimentacao.tipo === 'E' ? 'Entrada' : 'Saída' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantidade">
+        <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+        <td mat-cell *matCellDef="let movimentacao">{{ movimentacao.quantidade }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let movimentacao">{{ movimentacao.data | date: 'short' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef>Usuário</th>
+        <td mat-cell *matCellDef="let movimentacao">{{ movimentacao.user.name }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
 </div>
