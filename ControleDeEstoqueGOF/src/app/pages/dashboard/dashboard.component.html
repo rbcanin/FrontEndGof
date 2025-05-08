@@ -4,19 +4,24 @@
   <div class="content">
     <h1>Movimentação</h1>
 
- 
+
     <div class="filters">
-      <input matInput placeholder="Filtrar produto" [(ngModel)]="columnFilters.produto" (ngModelChange)="applyFilters()">
+      <input matInput placeholder="Filtrar produto" [(ngModel)]="columnFilters.produto"
+        (ngModelChange)="applyFilters()">
+
+      <input matInput placeholder="Quantidade Mínima" [(ngModel)]="columnFilters.quantidadeMin"
+        (ngModelChange)="applyFilters()">
+      <input matInput placeholder="Quantidade Máxima" [(ngModel)]="columnFilters.quantidadeMax"
+        (ngModelChange)="applyFilters()">
+
       <mat-select [(ngModel)]="columnFilters.tipo" (selectionChange)="applyFilters()">
-        <mat-option value="">Todos</mat-option>
-        <mat-option value="E">Entrada</mat-option>
-        <mat-option value="S">Saída</mat-option>
+        <mat-option style="background-color: white;" value="">Todos</mat-option>
+        <mat-option style="background-color: white;" value="E">Entrada</mat-option>
+        <mat-option style="background-color: white;" value="S">Saída</mat-option>
       </mat-select>
-      <input matInput placeholder="Quantidade Mínima" [(ngModel)]="columnFilters.quantidadeMin" (ngModelChange)="applyFilters()">
-      <input matInput placeholder="Quantidade Máxima" [(ngModel)]="columnFilters.quantidadeMax" (ngModelChange)="applyFilters()">
     </div>
 
-  
+
     <table mat-table [dataSource]="filteredMovimentacoes" class="mat-elevation-z8">
       <ng-container matColumnDef="produto">
         <th mat-header-cell *matHeaderCellDef>Produto</th>
