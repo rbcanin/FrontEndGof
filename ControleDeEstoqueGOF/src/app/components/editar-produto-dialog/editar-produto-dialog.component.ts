@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatOption } from '@angular/material/select';
+import { ProdutoService } from '../../services/produto.service';
 
 @Component({
   selector: 'app-editar-produto-dialog',
@@ -31,26 +32,17 @@ export class EditarProdutoDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<EditarProdutoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Produto,
     private fb: FormBuilder,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private produtoService: ProdutoService
   ) {}
 
 
   ngOnInit(): void {
-    const possuiValidade = this.data.tipoProduto === 1 && this.data.validades?.length > 0;
-
-    this.mostrarValidade = possuiValidade;
-
     this.form = this.fb.group({
       nome: [this.data.nome, Validators.required],
       descricao: [this.data.descricao || ''],
       preco: [this.data.preco, [Validators.required, Validators.min(0)]],
-      categoriaId: [this.data.categoriaId, Validators.required],
-      dataValidade: [
-        possuiValidade && this.data.validades[0].dataValidade
-          ? new Date(this.data.validades[0].dataValidade)
-          : null,
-        possuiValidade ? Validators.required : []
-      ]
+      categoriaId: [this.data.categoriaId, Validators.required]
     });
 
     this.categoriaService.getAllCategorias().subscribe({
@@ -61,32 +53,25 @@ export class EditarProdutoDialogComponent implements OnInit {
 
   onSave(): void {
     if (this.form.invalid) return;
-  
-    const formatDate = (date: Date) => {
-      const d = new Date(date);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}/${month}/${year}`;
-    };
-  
-    const updatedProduto: Produto = {
-      ...this.data, // mantém todos os campos não editáveis
+    const updatedProduto = {
+      id: this.data.id,
       nome: this.form.value.nome,
       descricao: this.form.value.descricao,
       preco: this.form.value.preco,
-      categoriaId: this.form.value.categoriaId,
-      validades: this.mostrarValidade
-        ? [{
-            id: this.data.validades?.[0]?.id || 0,
-            estoqueProdutoId: this.data.id,
-            quantidade: this.data.validades?.[0]?.quantidade || 0,
-            dataValidade: formatDate(this.form.value.dataValidade)
-          }]
-        : []
+      categoriaId: this.form.value.categoriaId
     };
-  
+    console.log(updatedProduto);
     this.dialogRef.close(updatedProduto);
+  }
+
+  restaurarEdicao(): void{
+    if(this.data.id){
+      this.produtoService.retaurarProduto(this.data.id).subscribe({
+        next: () => console.log("sucesso para restaurar edição"),
+        error: err => alert('Erro ao fazer saída de produto: ' + err.message)
+      });
+    }
+    this.dialogRef.close("restaurado");
   }
 
   onCancel(): void {

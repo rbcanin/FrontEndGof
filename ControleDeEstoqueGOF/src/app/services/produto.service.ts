@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Produto } from '../models/produto.model';
 
 
 @Injectable({
@@ -32,5 +31,10 @@ export class ProdutoService {
   atualizarProduto(produto: any) {
     const url = this.apiUrlProdutos;
     return this.http.put(url, produto);
+  }
+
+  retaurarProduto(produtoId: number){
+    const url = this.apiUrlProdutos + 'lastVersion/' + produtoId;
+    return this.http.put(url, produtoId)
   }
 }

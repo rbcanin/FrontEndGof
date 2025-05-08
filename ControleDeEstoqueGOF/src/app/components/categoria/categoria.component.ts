@@ -23,7 +23,7 @@ export class CategoriaComponent{
       .subscribe({
         next: (res) => {
           console.log('Categoria criada com sucesso:', res);
-          this.categoriaNome = ''; // Limpa o input
+          this.categoriaNome = '';
         },
         error: (err) => {
           console.error('Erro ao criar categoria:', err);

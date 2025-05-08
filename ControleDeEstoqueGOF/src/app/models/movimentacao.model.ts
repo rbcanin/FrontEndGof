@@ -1,6 +1,6 @@
 export interface Movimentacao {
-  data: string; // ou Date, dependendo do formato que você espera
-  tipo: 'E' | 'S'; // 'E' para Entrada, 'S' para Saída
+  data: string;
+  tipo: 'E' | 'S';
   produto: string;
   quantidade: number;
   valorTotal: number;

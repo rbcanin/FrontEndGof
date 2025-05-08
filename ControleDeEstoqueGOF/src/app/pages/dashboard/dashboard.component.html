@@ -4,7 +4,7 @@
   <div class="content">
     <h1>Movimentação</h1>
 
-    <!-- Filtros -->
+ 
     <div class="filters">
       <input matInput placeholder="Filtrar produto" [(ngModel)]="columnFilters.produto" (ngModelChange)="applyFilters()">
       <mat-select [(ngModel)]="columnFilters.tipo" (selectionChange)="applyFilters()">
@@ -16,7 +16,7 @@
       <input matInput placeholder="Quantidade Máxima" [(ngModel)]="columnFilters.quantidadeMax" (ngModelChange)="applyFilters()">
     </div>
 
-    <!-- Tabela -->
+  
     <table mat-table [dataSource]="filteredMovimentacoes" class="mat-elevation-z8">
       <ng-container matColumnDef="produto">
         <th mat-header-cell *matHeaderCellDef>Produto</th>

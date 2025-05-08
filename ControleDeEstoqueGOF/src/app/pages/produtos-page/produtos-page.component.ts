@@ -77,7 +77,7 @@ export class ProdutosPageComponent implements OnInit {
           quantidadeSaida: 1 
         }));
 
-        this.dataSource.data = produtos;  // Atualiza a dataSource com os produtos carregados
+        this.dataSource.data = produtos; 
         this.validadesDisponiveis = [...new Set(produtos.map(p => p.validade).filter(v => v !== null))];
       },
       error: err => {
@@ -97,7 +97,6 @@ export class ProdutosPageComponent implements OnInit {
   }
 
   applyFilters() {
-    // Aplica o filtro na dataSource utilizando a coluna de filtros.
     this.dataSource.filter = JSON.stringify(this.columnFilters);
   }
 
@@ -110,7 +109,7 @@ export class ProdutosPageComponent implements OnInit {
       precoMin: '',
       precoMax: ''
     };
-    this.applyFilters();  // Chama a função para atualizar a tabela
+    this.applyFilters();
   }
 
   openPopUp() {
@@ -160,10 +159,15 @@ export class ProdutosPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.produtoService.atualizarProduto(result).subscribe({
-          next: () => alert('Produto atualizado com sucesso!'),
-          error: err => alert('Erro ao atualizar produto: ' + err.message)
-        });
+        if(result == "restaurado"){
+            this.carregarProdutos();
+        }else{
+          this.produtoService.atualizarProduto(result).subscribe({
+            next: () => this.carregarProdutos(),
+            error: err => alert('Erro ao atualizar produto: ' + err.message)
+          });
+        }
+     
       }
     });
   }

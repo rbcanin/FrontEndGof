@@ -26,24 +26,19 @@
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="mostrarValidade">
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Data de Validade</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dataValidade" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-
+    
     <div class="buttons">
+      <div style="padding-right: 110px;">
+        <button mat-button type="button" (click)="restaurarEdicao()">Restaurar</button>
+      </div>
       <button mat-button type="button" (click)="onCancel()">Cancelar</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
         Salvar
       </button>
     </div>
-   
+  
   </mat-dialog-actions>
 </form>

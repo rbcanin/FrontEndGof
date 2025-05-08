@@ -12,7 +12,7 @@ export interface Validade {
     quantTotal: number;
     preco: number;
     categoriaId: number;
-    categoria: any; // você pode substituir por uma interface de Categoria depois
+    categoria: any;
     tipoProduto: number;
     validades: Validade[];
   }
