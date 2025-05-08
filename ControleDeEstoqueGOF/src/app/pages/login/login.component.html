@@ -5,7 +5,6 @@
     <button (click)="login()">ENTRAR</button>
   </div>
 
-  <!-- Modal de criação de usuário -->
   <div *ngIf="showPopup" class="popup">
     <h2>Usuário não encontrado</h2>
     <input type="text" [(ngModel)]="name" placeholder="Digite seu nome">

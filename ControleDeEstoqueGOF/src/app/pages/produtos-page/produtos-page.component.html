@@ -61,9 +61,7 @@
       </div>
     </div>
 
-    <!-- Tabela de Produtos -->
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 user-table">
-      <!-- Colunas da Tabela -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
         <td mat-cell *matCellDef="let produto"> {{produto.id}} </td>

@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.movimentacaoService.getMovimentacoes().subscribe((data) => {
       this.movimentacoes = data;
-      this.filteredMovimentacoes = data; // Inicializa a tabela com todos os dados
+      this.filteredMovimentacoes = data; 
     });
   }
 
@@ -72,6 +72,6 @@ export class DashboardComponent implements OnInit {
       dataMax: '',
       usuario: ''
     };
-    this.applyFilters(); // Aplica filtros vazios, restaurando todos os dados
+    this.applyFilters(); 
   }
 }
