@@ -17,10 +17,10 @@
       <input matInput type="number" formControlName="preco" />
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field  appearance="fill" class="full-width">
       <mat-label>Categoria</mat-label>
-      <mat-select formControlName="categoriaId">
-        <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+      <mat-select style="background-color: white;" formControlName="categoriaId">
+        <mat-option style="background-color: white;" *ngFor="let cat of categorias" [value]="cat.id">
           {{ cat.nome }}
         </mat-option>
       </mat-select>
@@ -37,9 +37,13 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-      Salvar
-    </button>
+
+    <div class="buttons">
+      <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Salvar
+      </button>
+    </div>
+   
   </mat-dialog-actions>
 </form>

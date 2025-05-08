@@ -28,7 +28,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Categoria</mat-label>
         <mat-select formControlName="categoriaId">
-          <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+          <mat-option style="background-color: white;" *ngFor="let cat of categorias" [value]="cat.id">
             {{ cat.nome }}
           </mat-option>
         </mat-select>
