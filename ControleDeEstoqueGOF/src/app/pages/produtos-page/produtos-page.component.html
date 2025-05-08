@@ -12,7 +12,7 @@
     </div>
 
     <br>
-    
+
     <button mat-raised-button (click)="navigateToEntrada()">Fazer Entrada de Produto</button>
     <button mat-stroked-button color="warn" (click)="limparFiltros()">Limpar Filtros</button>
 
@@ -20,7 +20,34 @@
     <div class="filters-container">
       <div class="filter">
         <label for="nome">Produto</label>
-        <input matInput id="nome" placeholder="Filtrar nome" [(ngModel)]="columnFilters.nome" (ngModelChange)="applyFilters()">
+        <input matInput id="nome" placeholder="Filtrar nome" [(ngModel)]="columnFilters.nome"
+          (ngModelChange)="applyFilters()">
+      </div>
+
+
+
+      <div class="filter">
+        <label for="quantidadeMin">Quantidade Mínima</label>
+        <input matInput type="number" id="quantidadeMin" [(ngModel)]="columnFilters.quantidadeMin"
+          (ngModelChange)="applyFilters()">
+      </div>
+
+      <div class="filter">
+        <label for="quantidadeMax">Quantidade Máxima</label>
+        <input matInput type="number" id="quantidadeMax" [(ngModel)]="columnFilters.quantidadeMax"
+          (ngModelChange)="applyFilters()">
+      </div>
+
+      <div class="filter">
+        <label for="precoMin">Preço Mínimo</label>
+        <input matInput type="number" id="precoMin" [(ngModel)]="columnFilters.precoMin"
+          (ngModelChange)="applyFilters()">
+      </div>
+
+      <div class="filter">
+        <label for="precoMax">Preço Máximo</label>
+        <input matInput type="number" id="precoMax" [(ngModel)]="columnFilters.precoMax"
+          (ngModelChange)="applyFilters()">
       </div>
 
       <div class="filter">
@@ -31,26 +58,6 @@
             <mat-option *ngFor="let data of validadesDisponiveis" [value]="data">{{ data }}</mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
-
-      <div class="filter">
-        <label for="quantidadeMin">Quantidade Mínima</label>
-        <input matInput type="number" id="quantidadeMin" [(ngModel)]="columnFilters.quantidadeMin" (ngModelChange)="applyFilters()">
-      </div>
-
-      <div class="filter">
-        <label for="quantidadeMax">Quantidade Máxima</label>
-        <input matInput type="number" id="quantidadeMax" [(ngModel)]="columnFilters.quantidadeMax" (ngModelChange)="applyFilters()">
-      </div>
-
-      <div class="filter">
-        <label for="precoMin">Preço Mínimo</label>
-        <input matInput type="number" id="precoMin" [(ngModel)]="columnFilters.precoMin" (ngModelChange)="applyFilters()">
-      </div>
-
-      <div class="filter">
-        <label for="precoMax">Preço Máximo</label>
-        <input matInput type="number" id="precoMax" [(ngModel)]="columnFilters.precoMax" (ngModelChange)="applyFilters()">
       </div>
     </div>
 
